@@ -1,66 +1,34 @@
-package com.shivansh.spndr.service;
+package com.shivansh.spndr.controller;
 
 import com.shivansh.spndr.dto.ExpenseRequest;
 import com.shivansh.spndr.dto.ExpenseResponse;
-import com.shivansh.spndr.model.Expense;
-import com.shivansh.spndr.model.User;
-import com.shivansh.spndr.repository.ExpenseRepository;
-import com.shivansh.spndr.repository.UserRepository;
-import org.springframework.stereotype.Service;
+import com.shivansh.spndr.service.ExpenseService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
-public class ExpenseService {
+@RestController
+@RequestMapping("/expenses")
+public class ExpenseController {
 
-    private final ExpenseRepository expenseRepository;
-    private final UserRepository userRepository;
+    private final ExpenseService expenseService;
 
-    public ExpenseService(ExpenseRepository expenseRepository, UserRepository userRepository) {
-        this.expenseRepository = expenseRepository;
-        this.userRepository = userRepository;
+    public ExpenseController(ExpenseService expenseService) {
+        this.expenseService = expenseService;
     }
 
-    public ExpenseResponse addExpense(Long userId, ExpenseRequest request) {
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Expense expense = new Expense();
-        expense.setTitle(request.getTitle());
-        expense.setAmount(request.getAmount());
-        expense.setCategory(request.getCategory());
-        expense.setDate(request.getDate());
-        expense.setUser(user);
-
-        Expense savedExpense = expenseRepository.save(expense);
-
-        return mapToResponse(savedExpense);
+    @PostMapping("/{userId}")
+    public ExpenseResponse addExpense(@PathVariable Long userId, @RequestBody ExpenseRequest request) {
+        return expenseService.addExpense(userId, request);
     }
 
-    public List<ExpenseResponse> getUserExpenses(Long userId) {
-
-        List<Expense> expenses = expenseRepository.findByUserId(userId);
-
-        return expenses.stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
+    @GetMapping("/{userId}")
+    public List<ExpenseResponse> getUserExpenses(@PathVariable Long userId) {
+        return expenseService.getUserExpenses(userId);
     }
 
-    public void deleteExpense(Long expenseId) {
-        expenseRepository.deleteById(expenseId);
-    }
-
-    private ExpenseResponse mapToResponse(Expense expense) {
-
-        ExpenseResponse response = new ExpenseResponse();
-        response.setId(expense.getId());
-        response.setTitle(expense.getTitle());
-        response.setAmount(expense.getAmount());
-        response.setCategory(expense.getCategory());
-        response.setDate(expense.getDate());
-
-        return response;
+    @DeleteMapping("/{expenseId}")
+    public void deleteExpense(@PathVariable Long expenseId) {
+        expenseService.deleteExpense(expenseId);
     }
 }
