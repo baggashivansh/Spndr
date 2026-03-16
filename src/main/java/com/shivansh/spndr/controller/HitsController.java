@@ -1,11 +1,10 @@
 package com.shivansh.spndr.controller;
 
 import com.shivansh.spndr.service.HitsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "https://spndr-tracker.netlify.app")
 @RestController
-@RequestMapping("/hits")
 public class HitsController {
 
     private final HitsService hitsService;
@@ -14,13 +13,8 @@ public class HitsController {
         this.hitsService = hitsService;
     }
 
-    @GetMapping
-    public long getHits() {
-        return hitsService.getHits();
-    }
-
-    @PostMapping
-    public void incrementHits() {
-        hitsService.incrementHits();
+    @GetMapping("/hits")
+    public int hits() {
+        return hitsService.increment();
     }
 }
