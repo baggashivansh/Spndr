@@ -1,9 +1,9 @@
 package com.shivansh.spndr.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -17,14 +17,22 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<Expense> expenses;
-
     public User() {
+    }
+
+    public User(Long id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -49,13 +57,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Expense> getExpenses() {
-        return expenses;
-    }
-
-    public void setExpenses(List<Expense> expenses) {
-        this.expenses = expenses;
     }
 }

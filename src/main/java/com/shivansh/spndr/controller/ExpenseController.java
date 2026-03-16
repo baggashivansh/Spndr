@@ -3,11 +3,12 @@ package com.shivansh.spndr.controller;
 import com.shivansh.spndr.dto.ExpenseRequest;
 import com.shivansh.spndr.dto.ExpenseResponse;
 import com.shivansh.spndr.service.ExpenseService;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://spndr-tracker.netlify.app")
 @RestController
 @RequestMapping("/expenses")
 public class ExpenseController {
@@ -18,26 +19,21 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
+    @GetMapping("/{userId}")
+    public List<ExpenseResponse> getExpenses(@PathVariable Long userId) {
+        return expenseService.getExpensesByUser(userId);
+    }
+
     @PostMapping("/{userId}")
-    public ResponseEntity<ExpenseResponse> addExpense(
+    public ExpenseResponse addExpense(
             @PathVariable Long userId,
             @RequestBody ExpenseRequest request) {
 
-        ExpenseResponse response = expenseService.addExpense(userId, request);
-        return ResponseEntity.ok(response);
+        return expenseService.addExpense(userId, request);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<ExpenseResponse>> getExpenses(@PathVariable Long userId) {
-
-        List<ExpenseResponse> expenses = expenseService.getUserExpenses(userId);
-        return ResponseEntity.ok(expenses);
-    }
-
-    @DeleteMapping("/{expenseId}")
-    public ResponseEntity<String> deleteExpense(@PathVariable Long expenseId) {
-
-        expenseService.deleteExpense(expenseId);
-        return ResponseEntity.ok("Expense deleted successfully");
+    @DeleteMapping("/{id}")
+    public void deleteExpense(@PathVariable Long id) {
+        expenseService.deleteExpense(id);
     }
 }
