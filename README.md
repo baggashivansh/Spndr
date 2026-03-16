@@ -10,13 +10,15 @@ This project focuses on building the **backend foundation of an expense tracking
 
 ---
 
-# Live Backend
+# Live Application
 
-You can access the deployed backend here
+Frontend  
+https://spndr-tracker.netlify.app
 
+Backend  
 https://spndr.onrender.com
 
-If the service is inactive, the first request may take a few seconds while the server wakes up because it runs on a free hosting tier.
+If the backend service is inactive, the first request may take a few seconds while the server wakes up because it runs on a free hosting tier.
 
 ---
 
@@ -26,10 +28,10 @@ Spndr acts as the backend engine for an expense tracking system.
 
 It provides:
 
-A structured API for recording expenses
-A backend service for retrieving spending history
-A data storage layer for financial records
-A modular backend architecture built with Spring Boot
+A structured API for recording expenses  
+A backend service for retrieving spending history  
+A data storage layer for financial records  
+A modular backend architecture built with Spring Boot  
 
 The system allows a client application to interact with expense data through simple HTTP requests.
 
@@ -57,21 +59,21 @@ Container ready deployment using Docker
 
 # Technology Stack
 
-Backend
-Java 21
-Spring Boot
-Spring Data JPA
-Spring Security
+Backend  
+Java 21  
+Spring Boot  
+Spring Data JPA  
+Spring Security  
 
-Database
-H2 In Memory Database
+Database  
+H2 In Memory Database  
 
-Build Tool
-Maven
+Build Tool  
+Maven  
 
-Deployment
-Docker
-Render Cloud Platform
+Deployment  
+Docker  
+Render Cloud Platform  
 
 ---
 
@@ -79,16 +81,16 @@ Render Cloud Platform
 
 Spndr follows a layered backend architecture where each layer has a clear responsibility.
 
-Controller Layer
+Controller Layer  
 Handles incoming HTTP requests and exposes REST endpoints.
 
-Service Layer
+Service Layer  
 Contains the business logic responsible for processing expense related operations.
 
-Repository Layer
+Repository Layer  
 Manages database communication using Spring Data JPA.
 
-Database Layer
+Database Layer  
 Stores expense records using an H2 in memory database.
 
 This structure keeps the code organized and makes the system easier to maintain and extend.
@@ -157,13 +159,13 @@ http://localhost:8080/h2-console
 
 Use the following configuration
 
-JDBC URL
+JDBC URL  
 jdbc:h2:mem:spndrdb
 
-Username
+Username  
 sa
 
-Password
+Password  
 leave empty
 
 Since the database runs in memory, all stored data will reset whenever the application restarts.
@@ -172,16 +174,16 @@ Since the database runs in memory, all stored data will reset whenever the appli
 
 # Example API Endpoints
 
-Create Expense
+Create Expense  
 POST /expenses
 
-Retrieve All Expenses
+Retrieve All Expenses  
 GET /expenses
 
-Register User
+Register User  
 POST /auth/register
 
-Login User
+Login User  
 POST /auth/login
 
 These endpoints allow external applications to interact with the backend.
@@ -203,4 +205,3 @@ The deployment uses the free tier of Render, which means the service may sleep w
 # Author
 
 Built by **Shivansh Bagga**
-
